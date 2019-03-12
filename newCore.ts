@@ -7,4 +7,8 @@ class NewCore {
   doSomething() {
     this.mainRef.addNewPlayers(["bob"])
   }
+
+  doSomethingElse() {
+    this.mainRef.commands.callEventCommand("event1", "lol")
+  }
 }
