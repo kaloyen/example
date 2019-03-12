@@ -1,14 +1,14 @@
-const Commands = require("./Commands.ts")
-const Combat = require("./Combat.ts")
-const Character = require("./Character.ts")
-const Adventure = require("./Adventure.ts")
-const Events = require("./Events.ts")
+const { Commands } = require("./Commands.ts")
+const { Combat } = require("./Combat.ts")
+const { Character } = require("./Character.ts")
+const { Adventure } = require("./Adventure.ts")
+const { Events } = require("./Events.ts")
 
 class MainEventHandler {
-  currentAdventures = []
-  currentCharacters = []
-  commands
-  combatActions
+  currentAdventures: typeof Adventure[] = []
+  currentCharacters: typeof Character[] = []
+  commands!: typeof Commands
+  combatActions!: typeof Combat
   constructor() {
     const events = new Events()
     this.commands = new Commands(events)
