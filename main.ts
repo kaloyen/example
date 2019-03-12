@@ -4,13 +4,41 @@ const Character = require("./Character.ts")
 const Adventure = require("./Adventure.ts")
 const Events = require("./Events.ts")
 
-bot.onload(() => {
-  const events = new Events()
-  const commands = new Commands(events)
-  const combatActions = new Combat()
-  const charaters = [
-    new Character(combatActions, "Kaboos"),
-    new Character(combatActions, "Skollie")
-  ]
-  const StartingAdventure = new Adventure("forest", charaters)
+class MainEventHandler {
+  currentAdventures = []
+  currentCharacters = []
+  commands
+
+  constructor() {
+    const events = new Events()
+    const commands = new Commands(events)
+    const combatActions = new Combat()
+  }
+
+  addNewPlayers(names: string[]) {
+    names.map(name => {
+      this.currentCharacters.push(new Character(combatActions, name))
+    })
+  }
+
+  newAdventure(zone) {
+    this.currentAdventures.push(new Adventure(zone, this.currentCharacters))
+  }
+}
+
+const MainEventHandlerInstance = new MainEventHandler()
+bot.on("load", () => {
+  MainEventHandlerInstance.addNewPlayers([
+    "Skollie",
+    "Kaboos",
+    "Doorne",
+    "Anleus"
+  ])
+  MainEventHandlerInstance.newAdventure("forest")
+})
+
+bot.on("message", arg => {
+  if (message === "new adventure") {
+    MainEventHandlerInstance.newAdventure(arg)
+  }
 })
