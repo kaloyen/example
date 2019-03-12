@@ -8,16 +8,16 @@ class MainEventHandler {
   currentAdventures = []
   currentCharacters = []
   commands
-
+  combatActions
   constructor() {
     const events = new Events()
-    const commands = new Commands(events)
-    const combatActions = new Combat()
+    this.commands = new Commands(events)
+    this.combatActions = new Combat()
   }
 
   addNewPlayers(names: string[]) {
     names.map(name => {
-      this.currentCharacters.push(new Character(combatActions, name))
+      this.currentCharacters.push(new Character(this.combatActions, name))
     })
   }
 
@@ -27,6 +27,7 @@ class MainEventHandler {
 }
 
 const MainEventHandlerInstance = new MainEventHandler()
+
 bot.on("load", () => {
   MainEventHandlerInstance.addNewPlayers([
     "Skollie",
